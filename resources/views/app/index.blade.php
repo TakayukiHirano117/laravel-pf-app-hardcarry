@@ -10,7 +10,7 @@
 <body>
     <div class="flex">
         {{-- サイドバー --}}
-        <aside class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+        <aside class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 sticky top-0">
         <a href="#">
             <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="">
         </a>
@@ -27,7 +27,7 @@
         <div class="flex flex-col justify-between flex-1 mt-6">
             <nav>
                 {{-- ホーム --}}
-                <a class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md dark:bg-gray-800 dark:text-gray-200" href="{{ route('app.index') }}">
+                <a class="flex items-center px-4 py-2 text-gray-700 duration-300 hover:bg-gray-100 rounded-md dark:bg-gray-800 dark:text-gray-200" href="{{ route('app.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
                     <span class="mx-4 font-medium">Home</span>
                 </a>
@@ -55,7 +55,7 @@
                     <span class="mx-4 font-medium">Message</span>
                 </a>
                 {{-- 新規投稿 --}}
-                <a class="flex items-center px-4 py-2 mt-5 text-gray-800 transition-colors duration-300 transform rounded-xl hover:bg-blue-500 hover:text-gray-900 bg-blue-400" href="{{ route('app.post') }}">
+                <a class="flex items-center px-4 py-2 mt-5 text-gray-800 transition-colors duration-300 transform rounded-xl hover:bg-blue-500 hover:text-gray-900 bg-blue-400" href="{{ route('app.post.create') }}">
                     <span class="mx-4 font-medium text-center inline-block w-full">New Post</span>
                 </a>
             </nav>
@@ -63,13 +63,36 @@
             <a href="#" class="flex items-center px-4 -mx-2 hover:bg-gray-100 duration-300 rounded-xl py-2">
                 <img class="object-cover mx-2 rounded-full h-9 w-9" src="{{asset('storage/HiranoTakayuki.jpg')}}" alt="avatar" />
                 <span class="mx-2 font-medium text-gray-800 dark:text-gray-200">Takayuki Hirano</span>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
             </a>
         </div>
         </aside>
 
         {{-- タイムライン --}}
+        {{-- 投稿 --}}
         <div class="ml-10 w-full">
-            timeline
+            @foreach ($posts as $post)
+                <div class="max-w-3xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800 mt-6 mb-6 ml-10 hover:bg-gray-100 duration-300 cursor-pointer">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ $post->updated_at }}</span>
+                        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform rounded-full cursor-pointer hover:bg-blue-200" tabindex="0" role="button"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg></a>
+                    </div>
+
+                    <div class="mt-2">
+                        <a href="#" class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline" tabindex="0" role="link">{{ $post->title }}</a>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">{{ $post->body }}</p>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-4">
+                        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline" tabindex="0" role="link">Read more</a>
+
+                        <div class="flex items-center">
+                            <img class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block" src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80" alt="avatar">
+                            <a class="font-bold text-gray-700 cursor-pointer dark:text-gray-200" tabindex="0" role="link">User Name</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </body>

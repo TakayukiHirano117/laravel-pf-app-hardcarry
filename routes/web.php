@@ -27,6 +27,8 @@ Route::get('/welcome', function () {
 // メインページ
 Route::get('/', [IndexController::class, 'index'])
     ->name('app.index');
+Route::post('/', [IndexController::class, 'index'])
+    ->name('app.index');
 
 Route::post('/', [IndexController::class, 'index'])
     ->name('app.index');
@@ -48,8 +50,10 @@ Route::get('/message', [NotificationController::class, 'index'])
     ->name('app.notification');
 
 // 投稿
-Route::get('/post', [PostController::class, 'create'])
-    ->name('app.post');
+Route::get('post', [PostController::class, 'create'])
+    ->name('app.post.create');
+Route::post('post', [PostController::class, 'store'])
+    ->name('app.post.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,3 +66,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Language Switcher Route 言語切替用ルートだよ
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+
+    return redirect()->back();
+});

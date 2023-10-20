@@ -8,13 +8,13 @@
     <title>HardCarry.com</title>
 </head>
 <body>
-  <div class="flex">
+    <div class="flex">
         {{-- サイドバー --}}
+        {{-- ロゴ --}}
         <aside class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700 sticky top-0 ml-10">
         <a href="{{ route('app.index') }}">
             <img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="">
         </a>
-        {{-- ロゴ --}}
         <div class="relative mt-6">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
@@ -27,12 +27,12 @@
         <div class="flex flex-col justify-between flex-1 mt-6">
             <nav>
                 {{-- ホーム --}}
-                <a class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 duration-300 rounded-md dark:bg-gray-800 dark:text-gray-200" href="{{ route('app.index') }}">
+                <a class="flex items-center px-4 py-2 text-gray-700 duration-300 hover:bg-gray-100 rounded-md dark:bg-gray-800 dark:text-gray-200" href="{{ route('app.index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
                     <span class="mx-4 font-medium">Home</span>
                 </a>
                 {{-- プロフィール --}}
-                <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">
+                <a class="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="{{route('profile.edit')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
                     <span class="mx-4 font-medium">Profile</span>
                 </a>
@@ -60,17 +60,22 @@
                 </a>
             </nav>
             {{-- プロフィール画像 --}}
-            <a href="#" class="flex items-center px-4 -mx-2 hover:bg-gray-100 duration-300 rounded-xl py-2">
-                <img class="object-cover mx-2 rounded-full h-9 w-9" src="{{asset('storage/HiranoTakayuki.jpg')}}" alt="avatar" />
-                <span class="mx-2 font-medium text-gray-800 dark:text-gray-200">User Name</span>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
-            </a>
+            <div id="app" @click="isShow = !isShow">
+                <a href="" class="flex items-center px-4 -mx-2 hover:bg-gray-100 duration-300 rounded-xl py-2">
+                    {{-- プロフィールアイコン --}}
+                    <img class="object-cover mx-2 rounded-full h-9 w-9" src="{{asset('storage/HiranoTakayuki.jpg')}}" alt="avatar" />
+                    {{-- ユーザー名 --}}
+                    <span class="mx-2 font-medium text-gray-800 dark:text-gray-200">User Name</span>
+                    {{-- メニューアイコン --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                </a>
+            </div>
         </div>
         </aside>
-
-        {{-- 投稿フォーム --}}
-        <form action="{{ route('app.post.store') }}" method="post" class="ml-10 w-full">
-          <h1 class="text-4xl mt-5">New Post</h1>
+      
+        {{-- 編集 --}}
+        <form action="{{ route('app.post.update', $post) }}" method="post" class="ml-10 w-full">
+          <h1 class="text-4xl mt-5">Edit Post</h1>
           <hr class="my-6 border-gray-200 dark:border-gray-600 w-4/5 mt-10" />
           {{-- 保存しましたと表示 --}}
           @if(session('message'))
@@ -79,27 +84,30 @@
             </div>
           @endif
           @csrf
-            <div class="w-1/6">
-                <label for="deadline" class="block text-sm text-gray-500 dark:text-gray-300">Deadline</label>
-                <x-input-error :messages="$errors->get('deadline')"></x-input-error>
-                <input type="date" id="deadline" name="deadline" value="{{ old('deadline') }}" class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+          @method('patch')
+            <div class="w-1/6 mt-10">
+              <label for="title" class="block text-sm text-gray-500 dark:text-gray-300">Title</label>
+              <x-input-error :messages="$errors->get('title')"></x-input-error>
+              <input type="date" name="title" id="title" placeholder="Title" value="{{ old('deadline', $post->deadline) }}" class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
             </div>
             <div class="w-4/5 mt-10">
               <label for="title" class="block text-sm text-gray-500 dark:text-gray-300">Title</label>
               <x-input-error :messages="$errors->get('title')"></x-input-error>
-              <input type="text" name="title" id="title" placeholder="Title" value="{{ old('title') }}" class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+              <input type="text" name="title" id="title" placeholder="Title" value="{{ old('title', $post->title) }}" class="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
             </div>
             <div class="w-4/5">
               <label for="body" class="block text-sm text-gray-500 dark:text-gray-300 mt-5">body</label>
               <x-input-error :messages="$errors->get('body')"></x-input-error>
-              <textarea id="body" name="body" placeholder="body" class="block  mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300">{{ old('body') }}</textarea>
+              <textarea id="body" name="body" placeholder="body" class="block  mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300">{{ old('body', $post->body) }}</textarea>
             </div>
             <div class="mt-5">
               <button class="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z" /></svg>
-                <span class="ml-2">Post</span>
+                <span class="ml-2">Update</span>
               </button>
             </div>
         </form>
     </div>
+
 </body>
+</html>

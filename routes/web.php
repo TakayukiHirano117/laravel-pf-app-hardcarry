@@ -25,12 +25,9 @@ Route::get('/welcome', function () {
 });
 
 // メインページ
-Route::get('/', [IndexController::class, 'index'])
+Route::get('/', [PostController::class, 'index'])
     ->name('app.index');
-Route::post('/', [IndexController::class, 'index'])
-    ->name('app.index');
-
-Route::post('/', [IndexController::class, 'index'])
+Route::post('/', [PostController::class, 'index'])
     ->name('app.index');
 
 // プロフィール
@@ -50,10 +47,29 @@ Route::get('/message', [NotificationController::class, 'index'])
     ->name('app.notification');
 
 // 投稿
+// 新規作成
 Route::get('post', [PostController::class, 'create'])
     ->name('app.post.create');
+
+// 保存
 Route::post('post', [PostController::class, 'store'])
     ->name('app.post.store');
+
+// 個別表示
+Route::get('post/show/{post}', [PostController::class, 'show'])
+    ->name('app.post.show');
+
+// 編集・更新
+Route::get('post/{post}/edit', [PostController::class, 'edit'])
+    ->name('app.post.edit');
+Route::patch('post/{post}', [PostController::class, 'update'])
+    ->name('app.post.update');
+
+// 削除
+Route::get('post/{post}/destroy', [PostController::class, 'confirmDelete'])
+    ->name('app.post.confirmDelete');
+Route::delete('post/{post}', [PostController::class, 'destroy'])
+    ->name('app.post.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
